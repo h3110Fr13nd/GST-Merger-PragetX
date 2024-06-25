@@ -1,7 +1,8 @@
 import gradio as gr
 import os
 from pathlib import Path
-from utils import merge_excels_by_sheet_name, merge_and_save, get_min_max_daterange, get_min_max_date_string
+# from utils import merge_excels_by_sheet_name, merge_and_save, get_min_max_daterange, get_min_max_date_string
+from utils2 import merge_excels, find_headers
 
 def file_upload(files):
     return files
@@ -10,7 +11,7 @@ def change_file_name(output_text):
     return output_text
 
 def upload_and_merge(files, output_path="Merged_Report.xlsx"):
-    merge_and_save(files, output_file=output_path)
+    merge_excels(files, output_file=output_path)
     return [gr.Files(label="Download Merged Report", value=["Merged_Report.xlsx"], visible=True), gr.DownloadButton(label=f"Download {output_path}", value=output_path, visible=True)]
     
 def download_files_fn(files):
