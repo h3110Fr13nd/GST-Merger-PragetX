@@ -1,8 +1,11 @@
 import gradio as gr
+import threading
 import os
 from pathlib import Path
 # from utils import merge_excels_by_sheet_name, merge_and_save, get_min_max_daterange, get_min_max_date_string
 from utils2 import merge_excels, find_headers
+import webbrowser
+# from utils import merge_excels_by_sheet_name, merge_and_save, get_min_max_daterange, get_min_max_date_string
 
 def file_upload(files):
     return files
@@ -32,4 +35,15 @@ with gr.Blocks() as demo:
     upload_button.click(upload_and_merge, files, [download_files, download_button])
 
 
-demo.launch()
+if __name__ == "__main__":
+    # Create a thread for launching the demo
+    demo_thread = threading.Thread(target=demo.launch)
+
+    # Start the demo thread
+    demo_thread.start()
+
+    # Open default browser after the application has started running
+    webbrowser.open('http://localhost:7860')
+
+    # Wait for the demo thread to finish
+    demo_thread.join()
